@@ -69,13 +69,13 @@ public class TutorialActivity extends BaseActivity {
                 frame.setLayoutParams(frameLayout);
                 Button button = new Button(this);
                 button.setText("进入主页面");
-                FrameLayout.LayoutParams buttonparams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
+                FrameLayout.LayoutParams buttonparams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
                 button.setLayoutParams(buttonparams);
                 buttonparams.setMargins(10, 10, 10, 120);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                      //直接关闭即可
+                        //直接关闭即可
                         finish();
                     }
                 });

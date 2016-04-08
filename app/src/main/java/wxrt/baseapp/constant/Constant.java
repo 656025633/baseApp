@@ -6,4 +6,5 @@ package wxrt.baseapp.constant;
  */
 public class Constant {
     public static String  URL= "http://news-at.zhihu.com/";
+    public static String  DOU_URL= "https://api.douban.com/";
 }

@@ -15,7 +15,7 @@ public class RetrofitUtil{
     //定义共有的url
     private static ApiService apiService = new Retrofit
             .Builder()
-            .baseUrl(Constant.URL)
+            .baseUrl(Constant.DOU_URL)
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(ApiService.class);
