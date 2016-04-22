@@ -17,10 +17,36 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
-      ></FrameLayout>
+      >
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="300dp"
+        android:layout_height="300dp"/>
+
+  </FrameLayout>
+
     <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+      <RadioButton
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="first"
+          android:button="@null"
+          android:drawableTop="@drawable/bottom_group_bg"
+          />
+      <RadioButton
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+
+          android:text="first"
+          android:button="@null"
+          android:drawableTop="@drawable/bottom_group_bg"
+          />
 
     </RadioGroup>
 </LinearLayout>

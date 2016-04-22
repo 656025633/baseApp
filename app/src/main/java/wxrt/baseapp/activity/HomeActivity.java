@@ -5,7 +5,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Toast;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,6 +22,8 @@ import wxrt.baseapp.utils.RetrofitUtil;
 
 public class HomeActivity extends BaseActivity {
     private boolean firstEnter = true;
+    @Bind(R.id.imageview)
+    ImageView mImageView;
 
     private Handler handler = new Handler() {
         @Override
@@ -54,11 +60,28 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Glide.with(this)
+                .load("http://h.hiphotos.baidu.com/image/h%3D200/sign=10161fa51830e924d0a49b317c096e66/d52a2834349b033b4cabfe7712ce36d3d539bd7f.jpg")
+                .crossFade(5000)
+                .into(mImageView);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
     @Override
     protected void initData() {
 
         if (firstEnter) {
-            Intent intent = new Intent(HomeActivity.this, SplashActivity.class);
+            Intent intent = new Intent(HomeActivity.    this, SplashActivity.class);
             startActivity(intent);
             firstEnter = false;
         }
@@ -74,18 +97,18 @@ public class HomeActivity extends BaseActivity {
             }
         });
         //对数据库的操作
-
+       //
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //退出當前應用
+        //退出应用
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             exit();
             isExit = true;
         }
 
-        return super.onKeyDown(keyCode, event);
+        return super.onKeyDown(keyCode, event);     
     }
 
     public void exit() {
@@ -94,5 +117,10 @@ public class HomeActivity extends BaseActivity {
         //exit
             ActivityControlUtil.removeAll();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
