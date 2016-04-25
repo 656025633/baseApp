@@ -1,11 +1,8 @@
 package wxrt.baseapp.fragment;
 
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import wxrt.baseapp.R;
 import wxrt.baseapp.base.BaseFragment;
@@ -18,7 +15,7 @@ public class SecondFragment extends BaseFragment {
 
     @Override
     public int getContentLayoutId() {
-        return 0;
+        return R.layout.fragment_second;
     }
 
     @Override

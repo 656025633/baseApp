@@ -3,9 +3,15 @@ package wxrt.baseapp.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.bumptech.glide.Glide;
 
@@ -17,13 +23,33 @@ import retrofit2.Response;
 import wxrt.baseapp.R;
 import wxrt.baseapp.base.BaseActivity;
 import wxrt.baseapp.bean.DouBean;
+import wxrt.baseapp.fragment.MainFragment;
+import wxrt.baseapp.fragment.SecondFragment;
+import wxrt.baseapp.fragment.ThirdFragment;
 import wxrt.baseapp.utils.ActivityControlUtil;
 import wxrt.baseapp.utils.RetrofitUtil;
+import wxrt.baseapp.utils.T;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
+    @Bind(R.id.content)
+    FrameLayout mContent;
+    @Bind(R.id.button_one)
+    RadioButton mButtonOne;
+    @Bind(R.id.button_two)
+    RadioButton mButtonTwo;
+    @Bind(R.id.button_three)
+    RadioButton mButtonThree;
+    @Bind(R.id.button_four)
+    RadioButton mButtonFour;
+    @Bind(R.id.button_group)
+    RadioGroup mButtonGroup;
     private boolean firstEnter = true;
     @Bind(R.id.imageview)
     ImageView mImageView;
+    private MainFragment mMainFragment;
+    private SecondFragment mSecondFragment;
+    private ThirdFragment mThirdFragment;
+    private FragmentManager mManager;
 
     private Handler handler = new Handler() {
         @Override
@@ -52,11 +78,20 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-
+        //添加fragment到content
+        mMainFragment = new MainFragment();
+        mSecondFragment = new SecondFragment();
+        mThirdFragment = new ThirdFragment();
     }
 
     @Override
     protected void initListener() {
+        //初始化监听设置
+        mButtonOne.setOnClickListener(this);
+        mButtonTwo.setOnClickListener(this);
+        mButtonThree.setOnClickListener(this);
+        mButtonFour.setOnClickListener(this);
+        mButtonGroup.check(R.id.button_one);
 
     }
 
@@ -81,7 +116,7 @@ public class HomeActivity extends BaseActivity {
     protected void initData() {
 
         if (firstEnter) {
-            Intent intent = new Intent(HomeActivity.    this, SplashActivity.class);
+            Intent intent = new Intent(HomeActivity.this, SplashActivity.class);
             startActivity(intent);
             firstEnter = false;
         }
@@ -97,7 +132,7 @@ public class HomeActivity extends BaseActivity {
             }
         });
         //对数据库的操作
-       //
+        //
     }
 
     @Override
@@ -106,21 +141,47 @@ public class HomeActivity extends BaseActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             exit();
             isExit = true;
+            return true;
         }
 
-        return super.onKeyDown(keyCode, event);     
+        return super.onKeyDown(keyCode, event);
     }
 
     public void exit() {
         handler.sendEmptyMessageDelayed(10, 2000);
         if (isExit == true) {
-        //exit
+            //exit
             ActivityControlUtil.removeAll();
+        } else {
+            T.show(this, "再按一次进行退出", 1);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.button_one:
+                changeFragment(mMainFragment);
+                break;
+            case R.id.button_two:
+                changeFragment(mSecondFragment);
+                break;
+            case R.id.button_three:
+                changeFragment(mThirdFragment);
+                break;
+            case R.id.button_four:
+                break;
+        }
+    }
+
+    private void changeFragment(Fragment mainFragment) {
+        mManager = getSupportFragmentManager();
+        mManager.beginTransaction().replace(R.id.content, mainFragment).commit();
     }
 }

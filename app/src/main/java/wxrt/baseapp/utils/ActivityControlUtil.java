@@ -2,6 +2,8 @@ package wxrt.baseapp.utils;
 
 import android.app.Activity;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +21,10 @@ public class ActivityControlUtil {
 
     }
     public static void removeAll(){
+        Logger.d("random",activities.size());
         //
         for(Activity activity:activities){
-            activities.remove(activity);
+           activity.finish();
         }
     }
 }
