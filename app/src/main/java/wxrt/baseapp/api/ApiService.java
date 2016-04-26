@@ -17,6 +17,7 @@ import wxrt.baseapp.bean.ZhihuBean;
 public interface ApiService {
     /* @GET("/data/sk/101010100.html")
      Observable<WeatherBean> getWeathe();*/
+    //https://api.douban.com/v2/movie/top250
     @GET("/data/sk/101010100.html")
     Call<WeatherBean> getWeathe();
 

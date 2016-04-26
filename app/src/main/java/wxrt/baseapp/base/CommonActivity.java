@@ -1,5 +1,7 @@
 package wxrt.baseapp.base;
 
+import android.os.Bundle;
+
 /**
  * Created by zcm on 2016/4/1.
  * qq:656025633
@@ -21,7 +23,7 @@ public class CommonActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle bundle) {
 
     }
 

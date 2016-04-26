@@ -1,19 +1,17 @@
 package wxrt.baseapp.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
-import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,13 +42,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.button_group)
     RadioGroup mButtonGroup;
     private boolean firstEnter = true;
-    @Bind(R.id.imageview)
-    ImageView mImageView;
-    private MainFragment mMainFragment;
+    private MainFragment mMainFragment = null;
     private SecondFragment mSecondFragment;
     private ThirdFragment mThirdFragment;
     private FragmentManager mManager;
-
+    private FragmentTransaction mTransaction;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -76,12 +72,31 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle saveInstanceState) {
         ButterKnife.bind(this);
-        //添加fragment到content
         mMainFragment = new MainFragment();
         mSecondFragment = new SecondFragment();
         mThirdFragment = new ThirdFragment();
+        //保存状态
+        if (saveInstanceState != null) {
+            if(mMainFragment != null) {
+              mMainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag(mMainFragment.getClass().getName());
+                mSecondFragment = (SecondFragment) getSupportFragmentManager().findFragmentByTag(mSecondFragment.getClass().getName());
+                mThirdFragment = (ThirdFragment) getSupportFragmentManager().findFragmentByTag(mThirdFragment.getClass().getName());
+                getSupportFragmentManager().beginTransaction().hide(mSecondFragment).hide(mThirdFragment).show(mMainFragment).commit();
+            }
+
+        } else {
+            //添加fragment到content
+
+            //设置第一次显示的fragment
+            mTransaction = getSupportFragmentManager().beginTransaction();
+            mTransaction
+                    .add(R.id.content,mMainFragment,mMainFragment.getClass().getName())
+                    .add(R.id.content,mSecondFragment,mSecondFragment.getClass().getName())
+                    .add(R.id.content,mThirdFragment,mThirdFragment.getClass().getName())
+                    .hide(mSecondFragment).hide(mThirdFragment).commit();
+        }
     }
 
     @Override
@@ -99,11 +114,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        Glide.with(this)
+      /*  Glide.with(this)
                 .load("http://h.hiphotos.baidu.com/image/h%3D200/sign=10161fa51830e924d0a49b317c096e66/d52a2834349b033b4cabfe7712ce36d3d539bd7f.jpg")
                 .crossFade(5000)
                 .into(mImageView);
-
+*/
     }
 
     @Override
@@ -164,24 +179,36 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        mManager = getSupportFragmentManager();
         int id = v.getId();
         switch (id) {
             case R.id.button_one:
-                changeFragment(mMainFragment);
+                if(!mMainFragment.isAdded()){
+                    mManager.beginTransaction().hide(mSecondFragment).hide(mThirdFragment).add(R.id.content,mMainFragment).commit();
+                }
+                else{
+                    mManager.beginTransaction().hide(mSecondFragment).hide(mThirdFragment).show(mMainFragment).commit();
+                }
                 break;
             case R.id.button_two:
-                changeFragment(mSecondFragment);
+                if(!mMainFragment.isAdded()){
+                    mManager.beginTransaction().hide(mMainFragment).hide(mThirdFragment).add(R.id.content,mSecondFragment).commit();
+                }
+                else{
+                    mManager.beginTransaction().hide(mMainFragment).hide(mThirdFragment).show(mSecondFragment).commit();
+                }
                 break;
             case R.id.button_three:
-                changeFragment(mThirdFragment);
+                if(!mMainFragment.isAdded()){
+                    mManager.beginTransaction().hide(mSecondFragment).hide(mMainFragment).add(R.id.content,mThirdFragment).commit();
+                }
+                else{
+                    mManager.beginTransaction().hide(mSecondFragment).hide(mMainFragment).show(mThirdFragment).commit();
+                }
                 break;
             case R.id.button_four:
                 break;
         }
     }
 
-    private void changeFragment(Fragment mainFragment) {
-        mManager = getSupportFragmentManager();
-        mManager.beginTransaction().replace(R.id.content, mainFragment).commit();
-    }
 }

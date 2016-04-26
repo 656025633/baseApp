@@ -2,6 +2,7 @@ package wxrt.baseapp.activity;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
@@ -41,7 +42,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle saveInstanceState) {
         //
         new Thread(
                 new Runnable() {
