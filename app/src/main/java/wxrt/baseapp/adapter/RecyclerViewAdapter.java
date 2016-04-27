@@ -24,9 +24,13 @@ import wxrt.baseapp.bean.DouBean;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<DouBean.SubjectsBean> mList;
+    private MyClickListener listener;
     public RecyclerViewAdapter(Context context, List<DouBean.SubjectsBean> datas) {
         mContext = context;
         mList = datas;
+    }
+    public void setOnClickListener(MyClickListener listener){
+        this.listener = listener;
     }
     public void addData(List<DouBean.SubjectsBean> datas){
         if(mList != null){
@@ -46,7 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(mList == null){
             return ;
         }
@@ -67,6 +71,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         //设置电影图片
         String imageUrl = mList.get(position).getImages().getMedium();
         Glide.with(mContext).load(imageUrl).into(viewHolder.mMovieImage);
+        //设置
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.setOnClickListener(v,position);
+            }
+        });
     }
 
     @Override
@@ -79,11 +90,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView mMovieName,mMovieStar;
         ImageView mMovieImage;
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(final View itemView) {
             super(itemView);
             mMovieName = (TextView) itemView.findViewById(R.id.tv_movieName);
             mMovieStar = (TextView) itemView.findViewById(R.id.tv_star);
             mMovieImage = (ImageView)itemView.findViewById(R.id.img_movieImage);
         }
+    }
+    public interface  MyClickListener{
+        void setOnClickListener(View view,int position);
+        void setOnLongClick(View view,int position);
     }
 }

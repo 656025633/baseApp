@@ -114,27 +114,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-      /*  Glide.with(this)
-                .load("http://h.hiphotos.baidu.com/image/h%3D200/sign=10161fa51830e924d0a49b317c096e66/d52a2834349b033b4cabfe7712ce36d3d539bd7f.jpg")
-                .crossFade(5000)
-                .into(mImageView);
-*/
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    protected void initData() {
-
         if (firstEnter) {
             Intent intent = new Intent(HomeActivity.this, SplashActivity.class);
             startActivity(intent);
             firstEnter = false;
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void initData() {
         RetrofitUtil.getApiService().getDouNews(0, 2).enqueue(new Callback<DouBean>() {
             @Override
             public void onResponse(Call<DouBean> call, Response<DouBean> response) {
