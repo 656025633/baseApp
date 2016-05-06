@@ -10,6 +10,7 @@ import android.view.View;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,10 +95,23 @@ public class MainFragment extends BaseFragment implements OnRefreshListener, OnL
 
     }
 
+    CommonAdapter adapter;
     @Override
     public void initData() {
         mAdapter = new RecyclerViewAdapter(getActivity(), datas);
         mAdapter.setOnClickListener(this);
+       // mSwipeTarget.setAdapter(mAdapter);
+   /*     adapter = new CommonAdapter<DouBean.SubjectsBean>(getActivity(),R.layout.movieitem,datas) {
+            @Override
+            public void convert(ViewHolder holder, DouBean.SubjectsBean o) {
+                holder.setText(R.id.tv_movieName,o.getTitle());
+            }
+
+          *//*  @Override
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+            }*//*
+        }*/
         mSwipeTarget.setAdapter(mAdapter);
         mSwipeTarget.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSwipeTarget.setItemAnimator(new SlideInDownAnimator());
@@ -106,6 +120,7 @@ public class MainFragment extends BaseFragment implements OnRefreshListener, OnL
        // mSwipeToLoadLayout.setOnRefreshListener(this);
         mSwipeToLoadLayout.setOnLoadMoreListener(this);
     }
+
 
     @Override
     public void onDestroyView() {
@@ -172,7 +187,7 @@ public class MainFragment extends BaseFragment implements OnRefreshListener, OnL
     @Override
     public void setOnClickListener(View view, int position) {
         T.show(getActivity(),""+position,1);
-
+       // DialogUtil.createDialog(getActivity());
     }
 
     @Override

@@ -85,7 +85,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 mThirdFragment = (ThirdFragment) getSupportFragmentManager().findFragmentByTag(mThirdFragment.getClass().getName());
                 getSupportFragmentManager().beginTransaction().hide(mSecondFragment).hide(mThirdFragment).show(mMainFragment).commit();
             }
-
         } else {
             //添加fragment到content
 

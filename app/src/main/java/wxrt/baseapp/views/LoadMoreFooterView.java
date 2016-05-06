@@ -7,6 +7,9 @@ import android.widget.TextView;
 import com.aspsine.swipetoloadlayout.SwipeLoadMoreTrigger;
 import com.aspsine.swipetoloadlayout.SwipeTrigger;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Mr.ZCM on 2016/4/25.
  * QQ:656025633
@@ -24,7 +27,7 @@ public class LoadMoreFooterView extends TextView implements SwipeTrigger, SwipeL
 
     @Override
     public void onLoadMore() {
-        setText("LOADING MORE");
+    //    setText("上拉加载更多");
     }
 
     @Override
@@ -34,25 +37,27 @@ public class LoadMoreFooterView extends TextView implements SwipeTrigger, SwipeL
 
     @Override
     public void onMove(int yScrolled, boolean isComplete, boolean automatic) {
+        SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd HH:mm:ss");
+        String date = format.format(new Date());
         if (!isComplete) {
             if (yScrolled <= -getHeight()) {
-                setText("RELEASE TO LOAD MORE");
+                setText("松手刷新数据");
             } else {
-                setText("SWIPE TO LOAD MORE");
+                setText("上拉加载更多"+date);
             }
         } else {
-            setText("LOAD MORE RETURNING");
+            setText("正在加载数据");
         }
     }
 
     @Override
     public void onRelease() {
-        setText("LOADING MORE");
+        setText("松手刷新数据");
     }
 
     @Override
     public void onComplete() {
-        setText("COMPLETE");
+        setText("加载完成");
     }
 
     @Override

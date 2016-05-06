@@ -5,14 +5,9 @@
     tools:context="wxrt.baseapp.fragment.SecondFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="second" />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLength="10"
-        />
-
+<android.support.v4.view.ViewPager
+    android:id="@+id/mViewPager"
+    android:layout_width="match_parent"
+    android:layout_height="130dp">
+</android.support.v4.view.ViewPager>
 </FrameLayout>
